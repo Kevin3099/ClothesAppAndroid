@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">ClothesStoreManagementApp</string>
+    <string name="app_name">ClothesStore</string>
+    <string name="button_addClothesStore">Add ClothesStore</string>
+    <string name="hint_clothesTitle">ClothesStore Title</string>
+    <string name="hint_clothesDescription">Description </string>
+    <string name="menu_addClothesStore">Add</string>
+    <string name="menu_cancelClothesStore">Cancel</string>
+    <string name="enter_clothes_title"> Please enter a ClothesStore Title </string>
+    <string name="save_clothes"> Save ClothesStore </string>
+    <string name="button_addImage"> Add Image </string>
+    <string name="select_clothes_image">Select clothes image</string>
+    <string name="change_clothes_image">Change clothes image</string>
+    <string name="button_location">Set Location</string>
+    <string name="title_activity_map">Map</string>
 </resources>
