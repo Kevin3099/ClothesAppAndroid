@@ -20,6 +20,7 @@ class ClothesStoreListActivity : AppCompatActivity(), ClothesStoreListener/*, Mu
     lateinit var app: MainApp
     private lateinit var binding: ActivityClothesListBinding
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,7 @@ class ClothesStoreListActivity : AppCompatActivity(), ClothesStoreListener/*, Mu
 
         loadClothesStores()
         registerRefreshCallback()
+        registerMapCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -47,6 +49,10 @@ class ClothesStoreListActivity : AppCompatActivity(), ClothesStoreListener/*, Mu
             R.id.item_add -> {
                 val launcherIntent = Intent(this, ClothesStoreActivity::class.java)
                 refreshIntentLauncher.launch(launcherIntent)
+            }
+            R.id.item_map -> {
+                val launcherIntent = Intent(this, ClothesStoreMapsActivity::class.java)
+                mapIntentLauncher.launch(launcherIntent)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -64,6 +70,12 @@ class ClothesStoreListActivity : AppCompatActivity(), ClothesStoreListener/*, Mu
             { loadClothesStores() }
     }
 
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            {  }
+    }
+
     private fun loadClothesStores() {
         showClothesStores(app.clothess.findAll())
     }
@@ -72,5 +84,6 @@ class ClothesStoreListActivity : AppCompatActivity(), ClothesStoreListener/*, Mu
         binding.recyclerView.adapter = ClothesStoreAdapter(clothess, this)
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
+
 
 }

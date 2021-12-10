@@ -1,10 +1,8 @@
 package ie.wit.clothesstoremanagementapp.adapters
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
 import ie.wit.clothesstoremanagementapp.databinding.CardClothesBinding
 import ie.wit.clothesstoremanagementapp.models.ClothesStoreModel
@@ -39,11 +37,9 @@ class ClothesStoreAdapter constructor(
         fun bind(clothes: ClothesStoreModel, listener: ClothesStoreListener) {
             binding.clothesTitle.text = clothes.title
             binding.description.text = clothes.description
+            binding.price.text = clothes.price.toString()
+            binding.type.text = clothes.clothingType
             Picasso.get().load(clothes.image).resize(200,200).into(binding.imageIcon)
-//            Glide.with(binding.root)
-//                .load(clothes.image)
-//                .override(200,200)
-//                .into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onClothesStoreClick(clothes) }
         }
     }

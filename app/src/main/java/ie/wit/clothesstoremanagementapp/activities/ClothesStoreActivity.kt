@@ -29,12 +29,10 @@ class ClothesStoreActivity : AppCompatActivity() {
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
-    //var location = Location(52.245696, -7.139102, 15f)
+    var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        var edit = false
 
         binding = ActivityClothesBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -50,6 +48,8 @@ class ClothesStoreActivity : AppCompatActivity() {
             clothes = intent.extras?.getParcelable("clothes_edit")!!
             binding.clothesTitle.setText(clothes.title)
             binding.description.setText(clothes.description)
+            binding.type.setText(clothes.clothingType)
+            binding.price.setText(clothes.price.toString())
             binding.btnAdd.setText(R.string.save_clothes)
             Picasso.get()
                 .load(clothes.image)
@@ -62,6 +62,8 @@ class ClothesStoreActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener() {
             clothes.title = binding.clothesTitle.text.toString()
             clothes.description = binding.description.text.toString()
+            clothes.clothingType = binding.type.text.toString()
+            clothes.price = binding.price.text.toString().toDouble()
             if (clothes.title.isEmpty()) {
                 Snackbar.make(it,R.string.enter_clothes_title, Snackbar.LENGTH_LONG)
                         .show()
@@ -99,11 +101,16 @@ class ClothesStoreActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_clothes, menu)
+        if (edit) menu.getItem(0).isVisible = true
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.item_delete -> {
+                app.clothess.delete(clothes)
+                finish()
+            }
             R.id.item_cancel -> {
                 finish()
             }

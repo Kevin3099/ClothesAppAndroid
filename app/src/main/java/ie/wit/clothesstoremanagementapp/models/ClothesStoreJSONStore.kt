@@ -22,6 +22,8 @@ fun generateRandomId(): Long {
 class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
 
     var clothess = mutableListOf<ClothesStoreModel>()
+    var filteredTypeClothing = mutableListOf<ClothesStoreModel>()
+    var filteredPriceClothing = mutableListOf<ClothesStoreModel>()
 
     init {
         if (exists(context, JSON_FILE)) {
@@ -41,8 +43,55 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
     }
 
 
-    override fun update(clothes: ClothesStoreModel) {
-        // todo
+    override fun update(Clothing: ClothesStoreModel) {
+        var foundClothing = findOne(Clothing.id!!)
+        if (foundClothing != null) {
+            foundClothing.title = Clothing.title
+            foundClothing.description = Clothing.description
+            foundClothing.price = Clothing.price
+            foundClothing.clothingType = Clothing.clothingType
+            foundClothing.image = Clothing.image
+            foundClothing.lat = Clothing.lat
+            foundClothing.lng = Clothing.lng
+            foundClothing.zoom = Clothing.zoom
+        }
+        serialize()
+    }
+
+    override fun delete(Clothing: ClothesStoreModel) {
+        clothess.remove(Clothing)
+        serialize()
+    }
+
+    override fun findOne(id: Long): ClothesStoreModel? {
+        var foundClothing: ClothesStoreModel? = clothess.find { p -> p.id == id }
+        return foundClothing
+    }
+
+    override fun findByTitle(title: String): ClothesStoreModel? {
+        var foundClothing: ClothesStoreModel? = clothess.find { p -> p.title == title }
+       // logger.info { foundClothing }
+        return foundClothing
+    }
+
+    override fun filterByType(clothingType: String): MutableList<ClothesStoreModel> {
+        clothess.forEach {
+            if (it.clothingType.equals(clothingType, ignoreCase = true)) {
+                filteredTypeClothing.add(it)
+           //     logger.info { it }
+            }
+        }
+        return filteredTypeClothing
+    }
+
+    override fun filterByPrice(lowPrice: Double, highPrice: Double): MutableList<ClothesStoreModel> {
+        clothess.forEach {
+            if (it.price in lowPrice..highPrice) {
+                filteredPriceClothing.add(it)
+            //    logger.info { it }
+            }
+        }
+        return filteredPriceClothing
     }
 
     private fun serialize() {
