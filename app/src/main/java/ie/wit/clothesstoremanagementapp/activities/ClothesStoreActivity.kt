@@ -1,9 +1,11 @@
 package ie.wit.clothesstoremanagementapp.activities
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
@@ -11,6 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import ie.wit.clothesstoremanagementapp.R
@@ -30,6 +34,40 @@ class ClothesStoreActivity : AppCompatActivity() {
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var edit = false
+
+    val db = Firebase.firestore
+
+
+    fun addDataBase(){
+        val clothesItem = hashMapOf(
+            "title" to "Ada",
+            "description" to "Lovelace",
+            "price" to 1815,
+            "type" to "shirt"
+        )
+
+        db.collection("clothingItems")
+            .add(clothesItem)
+            .addOnSuccessListener { documentReference ->
+                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
+    }
+
+    fun getDataBase(){
+        db.collection("clothingItems")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents.", exception)
+            }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
