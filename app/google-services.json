@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "502310088456",
+    "project_id": "clothesstoremanagementapp",
+    "storage_bucket": "clothesstoremanagementapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:502310088456:android:6762104215e3fe811506bd",
+        "android_client_info": {
+          "package_name": "ie.wit.clothesstoremanagementapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "502310088456-3bm34237t9nt8n0g3cdfj6pr4be3nm8q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6_g01QxT7pMiZAnVBiY0Q64GBQmUWT6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "502310088456-3bm34237t9nt8n0g3cdfj6pr4be3nm8q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
