@@ -93,7 +93,19 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
-
+                <Button
+                    android:id="@+id/btnOpenCamera"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@color/colorAccent"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/button_openCamera"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    />
                 <Button
                     android:id="@+id/chooseImage"
                     android:layout_width="match_parent"
@@ -138,7 +150,6 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
 
-
                 <ImageView
                     android:id="@+id/ivImage"
                     android:layout_width="0dp"
@@ -150,15 +161,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-                <Button
-                    android:id="@+id/btnOpenCamera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
-                    android:text="@string/button_openCamera"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+
             </LinearLayout>
         </ScrollView>
 
