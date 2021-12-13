@@ -11,6 +11,9 @@ internal fun getId(): Long {
 class ClothesStoreMemStore : ClothesStoreStore {
 
     val clothess = ArrayList<ClothesStoreModel>()
+    override fun loadFromFirebase() {
+        TODO("Not yet implemented")
+    }
 
     override fun findAll(): List<ClothesStoreModel> {
         return clothess
