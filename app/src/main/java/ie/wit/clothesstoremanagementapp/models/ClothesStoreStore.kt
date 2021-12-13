@@ -1,5 +1,7 @@
 package ie.wit.clothesstoremanagementapp.models
 
+import android.content.Intent
+
 interface ClothesStoreStore {
     fun loadFromFirebase()
     fun findAll(): List<ClothesStoreModel>

@@ -1,13 +1,18 @@
 package ie.wit.clothesstoremanagementapp.activities
 
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.gms.maps.GoogleMap
@@ -35,6 +40,12 @@ class ClothesStoreActivity : AppCompatActivity() {
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var edit = false
 
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+
+    private var currentImagePath: String? = null
+    private lateinit var btnOpenCamera: Button
+    private lateinit var ivPhoto: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,6 +53,25 @@ class ClothesStoreActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
+
+        btnOpenCamera = findViewById(R.id.btnOpenCamera)
+        ivPhoto = findViewById(R.id.ivImage)
+
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+                result ->
+            if(result.resultCode == Activity.RESULT_OK){
+                handleCameraImage(result.data)
+            }
+        }
+
+        btnOpenCamera.setOnClickListener {
+
+            //intent to open camera app
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            resultLauncher.launch(cameraIntent)
+
+        }
+
 
         app = application as MainApp
 
@@ -101,6 +131,13 @@ class ClothesStoreActivity : AppCompatActivity() {
 
         registerImagePickerCallback()
         registerMapCallback()
+    }
+
+
+    private fun handleCameraImage(intent: Intent?) {
+        val bitmap = intent?.extras?.get("data") as Bitmap
+        ivPhoto.setImageBitmap(bitmap)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -1,9 +1,14 @@
 package ie.wit.clothesstoremanagementapp.models
 
+import android.content.ActivityNotFoundException
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
+import androidx.core.app.ActivityCompat.startActivity
+import androidx.core.app.ActivityCompat.startActivityForResult
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.*
@@ -28,6 +33,7 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
     var clothess = mutableListOf<ClothesStoreModel>()
     var filteredTypeClothing = mutableListOf<ClothesStoreModel>()
     var filteredPriceClothing = mutableListOf<ClothesStoreModel>()
+
     val db = Firebase.firestore
 
     init {
@@ -37,8 +43,7 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
         loadFromFirebase()
     }
 
-    override fun loadFromFirebase(): Int {
-        var finished = false
+    override fun loadFromFirebase() {
         db.collection("Clothing Items")
             .get()
             .addOnSuccessListener { documents ->
@@ -55,17 +60,10 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
                         clothess.add(clothing)
                     }
                 }
-                finished = true
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents: ", exception)
             }
-        if(finished){
-            return 1
-        }
-        else{
-            return 0
-        }
     }
 
     override fun findAll(): MutableList<ClothesStoreModel> {

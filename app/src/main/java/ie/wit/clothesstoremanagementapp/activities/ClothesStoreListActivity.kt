@@ -13,7 +13,6 @@ import ie.wit.clothesstoremanagementapp.adapters.ClothesStoreAdapter
 import ie.wit.clothesstoremanagementapp.adapters.ClothesStoreListener
 import ie.wit.clothesstoremanagementapp.databinding.ActivityClothesListBinding
 import ie.wit.clothesstoremanagementapp.main.MainApp
-import ie.wit.clothesstoremanagementapp.models.ClothesStoreJSONStore
 import ie.wit.clothesstoremanagementapp.models.ClothesStoreModel
 
 class ClothesStoreListActivity : AppCompatActivity(), ClothesStoreListener/*, MultiplePermissionsListener*/ {
