@@ -1,6 +1,7 @@
 package ie.wit.clothesstoremanagementapp.models
 
 interface ClothesStoreStore {
+    fun loadFromFirebase()
     fun findAll(): List<ClothesStoreModel>
     fun findOne(id: Long): ClothesStoreModel?
     fun findByTitle(title: String): ClothesStoreModel?
