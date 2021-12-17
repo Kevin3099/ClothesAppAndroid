@@ -1,9 +1,14 @@
 package ie.wit.clothesstoremanagementapp.models
 
+import android.content.ActivityNotFoundException
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
+import androidx.core.app.ActivityCompat.startActivity
+import androidx.core.app.ActivityCompat.startActivityForResult
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.*
@@ -28,6 +33,7 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
     var clothess = mutableListOf<ClothesStoreModel>()
     var filteredTypeClothing = mutableListOf<ClothesStoreModel>()
     var filteredPriceClothing = mutableListOf<ClothesStoreModel>()
+
     val db = Firebase.firestore
 
     init {
@@ -37,8 +43,10 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
         loadFromFirebase()
     }
 
-    override fun loadFromFirebase(): Int {
-        var finished = false
+    override fun loadFromFirebase() {
+        //for(clothingItem in clothess){
+        //    clothess.remove(clothingItem)
+      //  }
         db.collection("Clothing Items")
             .get()
             .addOnSuccessListener { documents ->
@@ -48,6 +56,7 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
                     var clothing = ClothesStoreModel()
                     Log.d(TAG, "${document.id} => ${document.data}")
                     if(document.getData() != null){
+                        clothing.id = document.id.toLong()
                     clothing.title = document.get("title").toString()
                     clothing.description = document.get("description").toString()
                     clothing.price = document.get("price").toString().toDouble()
@@ -55,17 +64,10 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
                         clothess.add(clothing)
                     }
                 }
-                finished = true
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents: ", exception)
             }
-        if(finished){
-            return 1
-        }
-        else{
-            return 0
-        }
     }
 
     override fun findAll(): MutableList<ClothesStoreModel> {
@@ -89,6 +91,7 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
 
+    //    loadFromFirebase()
        // serialize()
     }
 
@@ -116,19 +119,21 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
                 .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
         }
 
-
+    //    loadFromFirebase()
      //   serialize()
     }
 
     override fun delete(Clothing: ClothesStoreModel) {
-        clothess.remove(Clothing)
+
 
         db.collection("Clothing Items").document(Clothing.id.toString())
             .delete()
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
             .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
 
+        clothess.remove(Clothing)
      //   serialize()
+    //    loadFromFirebase()
     }
 
     override fun findOne(id: Long): ClothesStoreModel? {
