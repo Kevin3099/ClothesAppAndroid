@@ -42,7 +42,6 @@ class ClothesStoreActivity : AppCompatActivity() {
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
-    private var currentImagePath: String? = null
     private lateinit var btnOpenCamera: Button
     private lateinit var ivPhoto: ImageView
 

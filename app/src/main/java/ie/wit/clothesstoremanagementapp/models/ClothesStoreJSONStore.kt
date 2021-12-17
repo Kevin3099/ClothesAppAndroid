@@ -44,6 +44,9 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
     }
 
     override fun loadFromFirebase() {
+        //for(clothingItem in clothess){
+        //    clothess.remove(clothingItem)
+      //  }
         db.collection("Clothing Items")
             .get()
             .addOnSuccessListener { documents ->
@@ -53,6 +56,7 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
                     var clothing = ClothesStoreModel()
                     Log.d(TAG, "${document.id} => ${document.data}")
                     if(document.getData() != null){
+                        clothing.id = document.id.toLong()
                     clothing.title = document.get("title").toString()
                     clothing.description = document.get("description").toString()
                     clothing.price = document.get("price").toString().toDouble()
@@ -87,6 +91,7 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
 
+    //    loadFromFirebase()
        // serialize()
     }
 
@@ -114,19 +119,21 @@ class ClothesStoreJSONStore(private val context: Context) : ClothesStoreStore {
                 .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
         }
 
-
+    //    loadFromFirebase()
      //   serialize()
     }
 
     override fun delete(Clothing: ClothesStoreModel) {
-        clothess.remove(Clothing)
+
 
         db.collection("Clothing Items").document(Clothing.id.toString())
             .delete()
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
             .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
 
+        clothess.remove(Clothing)
      //   serialize()
+    //    loadFromFirebase()
     }
 
     override fun findOne(id: Long): ClothesStoreModel? {
