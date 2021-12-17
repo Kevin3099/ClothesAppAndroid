@@ -1,5 +1,5 @@
 package ie.wit.clothesstoremanagementapp.activities
-
+// Reference for camera: https://developer.android.com/training/camera/photobasics
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent

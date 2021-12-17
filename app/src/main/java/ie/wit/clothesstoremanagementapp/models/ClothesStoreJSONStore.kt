@@ -1,5 +1,5 @@
 package ie.wit.clothesstoremanagementapp.models
-
+//Reference for Firebase: https://firebase.google.com/docs/firestore/query-data/get-data
 import android.content.ActivityNotFoundException
 import android.content.ContentValues.TAG
 import android.content.Context
